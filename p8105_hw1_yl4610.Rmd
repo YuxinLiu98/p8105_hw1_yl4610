@@ -1,0 +1,67 @@
+---
+title: "p8105_hw_yl4610"
+author: "Yuxin Liu"
+output: html_document
+date: "2022-09-18"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+install.packages("palmerpenguins")
+
+#question1
+```{r}
+library(tidyverse)
+
+data("penguins", package = "palmerpenguins")
+
+names(penguins)
+
+#the data in this dataset, including names / values of important variables:
+## [1] "species"           "island"            "bill_length_mm"   
+## [4] "bill_depth_mm"     "flipper_length_mm" "body_mass_g"      
+## [7] "sex"               "year"
+
+nrow(penguins)
+ncol(penguins)
+#the size of the dataset (using nrow and ncol): 344 rows and 8 columns
+
+mean(penguins$flipper_length_mm, na.rm = TRUE)
+#the mean flipper length
+
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point() 
+
+ggsave("scatter_plot.pdf")
+```
+
+#question2
+```{r}
+ans2 = tibble(
+  norm_samp = rnorm(10),
+  norm_samp_pos = norm_samp > 0,
+  char_vec =  letters[1:10],
+  fac_vec = factor(c("level1", "level1", "level1","level2","level2", "level2", "level3","level3","level3", "level3"), levels = c("level1", "level2", "level3")),
+)
+
+ans2
+
+mean(pull(ans2, norm_samp))
+mean(pull(ans2, norm_samp_pos))
+mean(pull(ans2, char_vec))
+mean(pull(ans2, fac_vec))
+## mean of a random sample of size 10:-0.122108
+## mean of the logical vector: 0.5
+## we cannot compute mean of character vector and factor vector because we only can compute mean of numeric or logical factor 
+
+as.numeric(pull(ans2, norm_samp))
+as.numeric(pull(ans2, norm_samp_pos))
+as.numeric(pull(ans2, char_vec))
+as.numeric(pull(ans2, fac_vec))
+
+## When the logical vector is true, value becomes 1; when the logical vector is false, value becomes 0; The character vectors become NA.
+##The factor vectors become 1,2,3, according to their levels. 
+
+```
+
