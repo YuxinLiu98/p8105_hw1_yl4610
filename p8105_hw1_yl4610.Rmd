@@ -14,8 +14,16 @@ install.packages("palmerpenguins") in console
 library(tidyverse)
 # load the penguins dataset
 data("penguins", package = "palmerpenguins")
+# for values of important variable; short descriptions are written below 
+summary(penguins)
 ```
 The data in this dataset, including names / values of important variable is: `r names(penguins)` 
+
+species: Adelie(152); Chinstrap(68); Gentoo(124).
+island: Biscoe(168); Dream(124); Torgersen(52).
+sex: female(165); male(168);  NA's(11).
+
+bill_length_mm ranges from 32.10 mm to 59.60 mm. bill_depth_mm ranges from 13.10 mm to 21.50 mm. flipper_length_mm ranges from 172 mm to 231 mm. body_mass_g ranges from 2700 g to 6300 g. year ranges from 2007 to 2009. 
 
 The size of the dataset (using nrow and ncol): is `r nrow(penguins)` rows and `r ncol(penguins)` columns.
 
@@ -24,7 +32,7 @@ The mean flipper length is: `r mean(penguins$flipper_length_mm, na.rm = TRUE)`mm
 ```{r, message=FALSE, warning = FALSE}
 # make a scatterplot of flipper_length_mm (y) vs bill_length_mm (x)
 ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point() 
-# export scatterplot
+# export scatterplot and save it as pdf 
 ggsave("scatter_plot.pdf")
 ```
 
@@ -43,17 +51,16 @@ mean(pull(ans2, norm_samp))
 mean(pull(ans2, norm_samp_pos))
 mean(pull(ans2, char_vec))
 mean(pull(ans2, fac_vec))
-# we cannot compute means of character vector and factor vector (outcomes are NA for both types of variables) because we only can compute mean of numeric or logical factor. The means for numeric or logical factor are numbers.
-
 ```
+We cannot compute means of character vector and factor vector (outcomes are NA for both types of variables). We only can compute mean of numeric or logical factor. The means for numeric or logical factor are numbers.
 ```{r, message=FALSE, warning = FALSE, results = 'hide'}
 # convert variables
 as.numeric(pull(ans2, norm_samp_pos))
 as.numeric(pull(ans2, char_vec))
 as.numeric(pull(ans2, fac_vec))
-
-# When the logical vector is true, value becomes 1; when the logical vector is false, value becomes 0; The character vectors become NA.
-# The factor vectors become 1,2,3, according to their levels.
-# Yes, it helps explain what happens when I try to take the mean.
 ```
-
+When the logical vector is true, value becomes 1; when the logical vector is false, value becomes 0; Logical vectors are converted to numbers based on elements of the sample are greater than 0.
+The character vectors become NA. 
+The factor vectors become 1,2,3, according to their levels. 
+Therefore, we can take the means of logical and factor characters after conversions.
+Yes, it helps explain what happens when I try to take the mean. 
